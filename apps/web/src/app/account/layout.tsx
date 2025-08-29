@@ -4,8 +4,8 @@ export default async function AccountPageLayout({
   hotel,
   user
 }: {
-  hotel?: React.ReactNode;
-  user?: React.ReactNode;
+  hotel: React.ReactNode;
+  user: React.ReactNode;
 }) {
   const userType = await getUserType();
 
