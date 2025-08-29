@@ -14,7 +14,11 @@ export const getClient = async () => {
     cookiesList = "";
   }
 
-  return rpc(process.env.NEXT_PUBLIC_APP_URL!, {
+  // Use relative URLs in production, absolute in development
+  const baseUrl =
+    process.env.NODE_ENV === "development" ? "http://localhost:8000" : "";
+
+  return rpc(baseUrl, {
     headers: {
       cookie: cookiesList
     }

@@ -1,17 +1,24 @@
 import rpc from "@nextplate/rpc";
-
-import { env } from "@/lib/env";
-import { cookies } from "next/headers";
+import { getCookies } from "cookies-next/client";
 
 export const getClient = async () => {
-  const cookiesStore = await cookies();
+  const cookieStore = getCookies();
 
-  const cookiesList = cookiesStore
-    .getAll()
-    .map((cookie) => `${cookie.name}=${cookie.value}`)
-    .join("; ");
+  let cookiesList;
 
-  return rpc(env.NEXT_PUBLIC_BACKEND_URL!, {
+  if (cookieStore) {
+    cookiesList = Object.entries(cookieStore)
+      .map(([name, value]) => `${name}=${value}`)
+      .join("; ");
+  } else {
+    cookiesList = "";
+  }
+
+  // Use relative URLs in production, absolute in development
+  const baseUrl =
+    process.env.NODE_ENV === "development" ? "http://localhost:8000" : "";
+
+  return rpc(baseUrl, {
     headers: {
       cookie: cookiesList
     }

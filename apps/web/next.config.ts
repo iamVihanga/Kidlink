@@ -10,12 +10,15 @@ const nextConfig: NextConfig = {
     "@repo/database"
   ],
   async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "http://localhost:8000/api/:path*"
-      }
-    ];
+    // Only rewrite in development
+    return process.env.NODE_ENV === "development"
+      ? [
+          {
+            source: "/api/:path*",
+            destination: "http://localhost:8000/api/:path*"
+          }
+        ]
+      : []; // In production, let Vercel handle API routes
   },
   images: {
     remotePatterns: [
