@@ -2,17 +2,5 @@
   "version": 2,
   "buildCommand": "pnpm run build:vercel",
   "outputDirectory": "apps/web/.next",
-  "installCommand": "pnpm install",
-  "functions": {
-    "apps/api/api/index.ts": {
-      "runtime": "nodejs18.x",
-      "maxDuration": 10
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/apps/api/api/index.ts"
-    }
-  ]
+  "installCommand": "pnpm install"
 }
