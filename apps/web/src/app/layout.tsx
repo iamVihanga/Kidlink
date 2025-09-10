@@ -1,6 +1,7 @@
 import { Providers } from "@/modules/layouts/providers";
 import "@repo/ui/globals.css";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Toaster } from "sonner";
 import { fontHeading, fontSans } from "../lib/fonts";
 
@@ -20,7 +21,7 @@ export default function RootLayout({
         className={`${fontSans.variable} ${fontHeading.variable} font-sans antialiased`}
       >
         <Providers>
-          {children}
+          <Suspense>{children}</Suspense>
           <Toaster position="bottom-left" />
         </Providers>
       </body>

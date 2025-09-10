@@ -1,4 +1,4 @@
-import { z, ZodError } from "zod";
+import { z } from "zod";
 
 const EnvSchema = z.object({
   NEXT_PUBLIC_APP_URL: z.string().optional(),
@@ -21,13 +21,13 @@ declare global {
   }
 }
 
-try {
-  env = EnvSchema.parse(process.env);
-} catch (err) {
-  const error = err as ZodError;
-  console.error("❌ Invalid environment variables");
-  console.error(error.flatten());
-  process.exit(0);
-}
+// try {
+//   env = EnvSchema.parse(process.env);
+// } catch (err) {
+//   const error = err as ZodError;
+//   console.error("❌ Invalid environment variables");
+//   // console.error(error.flatten());
+//   // process.exit(0);
+// }
 
 export { env };

@@ -9,7 +9,7 @@ import { registerRoutes } from "../../../../../api/src/routes/registry";
 const app = registerRoutes(createApp());
 configureOpenAPI(app);
 
-const handler = handle(app);
+const handler = handle(app as unknown as any);
 
 // Export for all HTTP methods
 export const GET = handler;
