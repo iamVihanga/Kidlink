@@ -8,6 +8,7 @@ import {
 
 import { db } from "@api/db";
 import env from "@api/env";
+import emailService from "@api/lib/email";
 import * as schema from "@repo/database/schemas";
 
 export const auth = betterAuth({
@@ -23,22 +24,37 @@ export const auth = betterAuth({
     enabled: true,
 
     sendResetPassword: async ({ user, url, token }) => {
-      // TODO: Implement email sending logic
-      console.log({
-        to: user.email,
-        subject: "Reset your password",
-        text: `Click the link to reset your password: ${url} \nToken: ${token}`
-      });
+      try {
+        const success = await emailService.sendPasswordResetEmail(
+          user.email,
+          url,
+          token
+        );
+        if (!success) {
+          console.error("Failed to send password reset email to:", user.email);
+        }
+      } catch (error) {
+        console.error("Error sending password reset email:", error);
+      }
     }
   },
   emailVerification: {
     sendVerificationEmail: async ({ user, url, token }) => {
-      // TODO: Implement email sending logic
-      console.log({
-        to: user.email,
-        subject: "Verify your email address",
-        text: `Click the link to verify your email: ${url} \nToken: ${token}`
-      });
+      try {
+        const success = await emailService.sendEmailVerificationEmail(
+          user.email,
+          url,
+          token
+        );
+        if (!success) {
+          console.error(
+            "Failed to send email verification email to:",
+            user.email
+          );
+        }
+      } catch (error) {
+        console.error("Error sending email verification email:", error);
+      }
     }
   },
   socialProviders: {
